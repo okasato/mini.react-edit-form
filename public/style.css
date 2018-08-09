@@ -4,6 +4,7 @@
 
 .mycomment {
   margin: 10px 0;
+  text-align: right;
 }
 
 .mycomment p{
@@ -15,6 +16,7 @@
   border-radius: 12px;
   background: #30e852;
   font-size: 15px;
+  text-align: left;
 }
 
 .mycomment p::after {

@@ -36,6 +36,7 @@ export default class App extends Component {
   }
 
   render() {
+    console.log('ref', this.refs.text);
     return (
       <div className='app'>
         <Typography variant='display4' color='inherit'>Hello!</Typography>
@@ -65,17 +66,15 @@ export default class App extends Component {
           </Paper>
         </form>
         <div>
-          <Paper>
-            <Typography variant='p'>{this.state.sentMsg}</Typography>
-          </Paper>
           <div className="mycomment">
-            <p>{this.state.sentMsg}</p>
+            <p ref='text'>{this.state.sentMsg}</p>
+            <IconButton onClick={this.handleEditMsg}>
+              <Edit />
+            </IconButton>
           </div>
-          <IconButton onClick={this.handleEditMsg}>
-            <Edit />
-          </IconButton>
         </div>
-        <EditForm 
+        <EditForm
+          text={this.state.sentMsg} 
           editform={this.state.editform}
         />
       </div>

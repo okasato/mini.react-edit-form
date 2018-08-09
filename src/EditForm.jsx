@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
+import Icon from "@material-ui/core/Icon";
 
 export default class EditForm extends Component {
 
@@ -10,7 +11,7 @@ export default class EditForm extends Component {
     }
   
     const range = selectText.getRangeAt(0);
-
+    console.log('hi selectText', selectText);
     return { selectText, range };
   }
 
@@ -44,12 +45,23 @@ export default class EditForm extends Component {
     this.changeTextFormat('span', 'color: rgb(214, 60, 24);');
   }
 
+  makeTextClear = () => {
+    const selectedText = this.getSelectedText();
+    const newNode = document.createElement('span');
+    // newNode.setAttribute('style', style);
+    newNode.innerHTML = selectedText.selectText.toString();
+
+    selectedText.range.deleteContents();
+    // selectedText.range.insertNode(newNode);
+  }
+
   render() {
     if (this.props.editform === false) {
       return (
         <div className='edit-form'></div>
       ) 
     } else {
+      console.log('@@@@', this.props.text);
       return (
         <div className='edit-form'>
           <IconButton onClick={this.makeTextBold}>
@@ -66,6 +78,9 @@ export default class EditForm extends Component {
           </IconButton>
           <IconButton onClick={this.makeTextColored}>
             <i class="material-icons">format_color_text</i>
+          </IconButton>
+          <IconButton onClick={this.makeTextClear}>
+            <Icon>clear</Icon>
           </IconButton>
         </div>
       )
