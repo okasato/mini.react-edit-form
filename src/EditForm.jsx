@@ -7,66 +7,49 @@ import ContentEditable from "react-contenteditable";
 
 export default class EditForm extends Component {
   state = {
-    html: String(this.props.text)
+    html: 'Edit here.'
   };
 
-  getSelectedText = () => {
-    const selectText = window.getSelection();
-    if(!selectText.rangeCount) {
-      return;
-    }
-  
-    const range = selectText.getRangeAt(0);
-    return { selectText, range };
-  }
-
-  changeTextFormat = (format, style = '') => {
-    const selectedText = this.getSelectedText();
-    const newNode = document.createElement(format);
-    newNode.setAttribute('style', style);
-    newNode.innerHTML = selectedText.selectText.toString();
-    
-    selectedText.range.deleteContents();
-    selectedText.range.insertNode(newNode);
-  }
-
   makeTextBold = () => {
-    // this.changeTextFormat('strong');
     document.execCommand('bold');
   }
 
   makeTextItalic = () => {
-    this.changeTextFormat('em');
+    document.execCommand('italic');
   }
 
   makeTextUnderlined = () => {
-    this.changeTextFormat('span', 'text-decoration: underline;');
+    document.execCommand('underline', false, null);        
   }
 
   makeTextStrikethrough = () => {
-    this.changeTextFormat('del');
+    document.execCommand('strikeThrough', false, null);    
   }
 
   makeTextColored = () => {
-    this.changeTextFormat('span', 'color: rgb(214, 60, 24);');
-  }
-
-  addText = () => {
-
+    document.execCommand('foreColor', false, '#e51c23');
   }
 
   makeTextClear = () => {
-    const selectedText = this.getSelectedText();
-    const newNode = document.createElement('span');
-    newNode.innerHTML = selectedText.selectText.toString();
+    document.execCommand('removeFormat', false, null);
+  }
 
-    const selectedNode = selectedText.selectText.anchorNode.parentNode;
-    selectedNode.parentNode.removeChild(selectedNode);
-    selectedText.range.insertNode(newNode);
+  undo = () => {
+    document.execCommand('undo', false, null);
+  }
+
+  redo = () => {
+    document.execCommand('redo', false, null);
   }
 
   handleChange = event => {
     this.setState({ html: event.target.value });
+  }
+
+  componentDidUpdate = prevProps => {
+    if (this.props.text !== prevProps.text) {
+      this.setState({ html: this.props.text });
+    }
   }
 
   render() {
@@ -75,14 +58,17 @@ export default class EditForm extends Component {
         <div className='edit-form'></div>
       ) 
     } else {
-      console.log('@@@@', this.props.text, this.state.html);
       return (
         <div className='edit-form'>
-          <ContentEditable
-            html={this.state.html}
-            disabled={false}
-            onChange={this.handleChange}
-          />
+          {/* <div className='edit-area'> */}
+          <Paper>
+            <ContentEditable
+              html={this.state.html}
+              disabled={false}
+              onChange={this.handleChange}
+            />
+          </Paper>
+          {/* </div> */}
           <IconButton onClick={this.makeTextBold}>
             <i class="material-icons">format_bold</i>
           </IconButton>
@@ -98,11 +84,14 @@ export default class EditForm extends Component {
           <IconButton onClick={this.makeTextColored}>
             <i class="material-icons">format_color_text</i>
           </IconButton>
-          <IconButton onClick={this.addText}>
-            <AddIcon />
-          </IconButton>
           <IconButton onClick={this.makeTextClear}>
             <Icon>clear</Icon>
+          </IconButton>
+          <IconButton onClick={this.undo}>
+            <i class="material-icons">undo</i>
+          </IconButton>
+          <IconButton onClick={this.redo}>
+            <i class="material-icons">redo</i>
           </IconButton>
         </div>
       )

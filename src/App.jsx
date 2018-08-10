@@ -13,8 +13,7 @@ import Chat from '@material-ui/icons/Chat'
 export default class App extends Component {
   state = {
     message: 'Cat in the Hat',
-    editform: false,
-    node: this.refs.text
+    editform: false
   }
 
   handleChange = event => {
@@ -37,7 +36,7 @@ export default class App extends Component {
   }
 
   render() {
-    console.log('ref', this.refs.text);
+    console.log('text', this.state.sentMsg);
     return (
       <div className='app'>
         <Typography variant='display4' color='inherit'>Hello!</Typography>
@@ -77,7 +76,6 @@ export default class App extends Component {
         <EditForm
           text={this.state.sentMsg} 
           editform={this.state.editform}
-          node={this.refs.text}
         />
       </div>
     )
