@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "hack": "webpack && webpack-dev-server --inline", 
+    "hack": "webpack && webpack-dev-server --inline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -43,6 +43,7 @@
     "@material-ui/icons": "^2.0.1",
     "material-design-icons": "^3.0.1",
     "react": "^16.4.2",
+    "react-contenteditable": "^2.1.5",
     "react-dom": "^16.4.2"
   }
 }

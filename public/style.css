@@ -30,3 +30,9 @@
   -webkit-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
+
+.edit-area {
+  width: 80%;
+  height: 90%;
+  border: solid 1px #ccc;
+}
